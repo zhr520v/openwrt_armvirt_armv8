@@ -318,6 +318,13 @@ jobs:
           ./scripts/feeds update -a
           ./scripts/feeds install -a
           
+      - name: Delete unwanted packages
+        # 删除冲突的包
+        working-directory: ./openwrt
+        run: |
+          rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd*,miniupnpd-iptables,wireless-regdb}
+
+
       - name: 后置补丁
         run: |
           if [[ "${{ inputs.CORE_patch_after }}" == *"false"* ]]; then
